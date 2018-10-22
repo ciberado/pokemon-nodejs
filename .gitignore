@@ -3,3 +3,4 @@ node_modules/
 .sass-cache
 
 *-local.json
+*.code-workspace
