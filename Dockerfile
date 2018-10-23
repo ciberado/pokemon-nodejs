@@ -8,4 +8,4 @@ RUN npm install
     
 EXPOSE 80
 
-CMD ["bin/www"] 
+CMD ["node", "bin/www"] 
