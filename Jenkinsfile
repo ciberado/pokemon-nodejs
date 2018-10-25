@@ -27,7 +27,6 @@ podTemplate(
             container ('docker') {
                 repository = "ciberado/pokemon-nodejs"
                 sh "docker build -t ${repository}:${commitId} ."
-                sh "docker push ${repository}:${commitId}"
             }
         }
         stage("push") {
