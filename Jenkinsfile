@@ -37,7 +37,7 @@ podTemplate(
                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'
               ]]) {
                   sh "docker login -u $USERNAME -p $PASSWORD"
-                  sh "docker push ciberado/picalculator"
+                  sh "docker push ${repository}:${commitId}"
               }
             }
         }
