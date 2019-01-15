@@ -1,9 +1,14 @@
+"use strict";
+
 const express = require('express');
 const router = express.Router();
 const pokemonDB = require('./pokemon');
 
-const pokemon = pokemonDB.getRandomPokemon();
-console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
+let pokemon;
+pokemonDB.getRandomPokemon().then(p => {
+  pokemon = p;
+  console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
+});
 
 let healthy = true;
 
