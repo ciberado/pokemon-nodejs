@@ -4,3 +4,4 @@ node_modules/
 
 *-local.json
 *.code-workspace
+package-lock.json
