@@ -16,7 +16,7 @@ export HOST=<db_instance>
 export USER=<instance username>
 export PASSWORD=<instance_password>
 export DATABASE=<database_name>
-export S3URLPREFIX=https://<bucket_name>/<object_prefix>
+export S3URLPREFIX=https://<bucket_url>/<object_prefix>
 npm start
 ```
 
