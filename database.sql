@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS pokemondemo;
+CREATE DATABASE IF NOT EXISTS pokemondatabase;
+USE pokemondatabase;
 
 DROP TABLE IF EXISTS pokemon;
 CREATE TABLE pokemon(
