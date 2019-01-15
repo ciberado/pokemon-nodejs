@@ -16,6 +16,7 @@
     "express": "^4.13.3",
     "express-handlebars": "^3.0.0",
     "morgan": "^1.9.1",
+    "promise-mysql": "^3.3.1",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
