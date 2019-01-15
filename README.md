@@ -1,6 +1,6 @@
 # Pokemon demo
 
-This is the RDS version of the Pokémon demo. You must provide the following environment variables to correctly run the example.
+This is the RDS+S3 version of the Pokémon demo. You must provide the following environment variables to correctly run the example.
 
 ```bash
 #!/bin/sh
@@ -16,7 +16,10 @@ export HOST=<db_instance>
 export USER=<instance username>
 export PASSWORD=<instance_password>
 export DATABASE=<database_name>
+export S3URLPREFIX=https://<bucket_name>/<object_prefix>
 npm start
 ```
 
 Remember you must open the port 8080 of the web instance and allowing incoming traffic on the mysql rds instance from there.
+
+Also, ensure S3 objects are open to public access.
