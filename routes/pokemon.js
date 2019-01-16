@@ -5,6 +5,7 @@ const mysql = require('promise-mysql');
 module.exports = {
 
   getRandomPokemon() {
+    console.log(`Connecting to ${process.env.HOST}.`);
     return mysql.createConnection({
       host: process.env.HOST,
       user: process.env.USER,

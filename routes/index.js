@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const pokemonDB = require('./pokemon');
 
+console.log('Starting Pokémon project.');
 let pokemon;
 pokemonDB.getRandomPokemon().then(p => {
   pokemon = p;
@@ -14,7 +15,9 @@ let healthy = true;
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Express' , pokemon });
+  res.render('index', { title: 'Express' , 
+                        pokemon, 
+                        s3UrlPrefix:  process.env.S3URLPREFIX});
 });
 router.get('/health', (req, res) => {
   if (healthy === false) {
