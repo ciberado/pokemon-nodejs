@@ -9,7 +9,7 @@ curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
 sudo yum -y install nodejs git
 git clone https://github.com/ciberado/pokemon-nodejs
 cd pokemon-nodejs
-git checkout tags/v0.0.4-mysql
+git checkout tags/v0.0.5-mysql-s3
 npm install
 export PORT=8080
 export HOST=<db_instance>
