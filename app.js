@@ -9,6 +9,7 @@ const healthbeat = require('./healthbeat.js');
 
 const pokemonDB = require('./pokemon');
 const pokemon = pokemonDB.getRandomPokemon();
+healthbeat.info.pokemon = pokemon;
 console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
 
 const app = express();

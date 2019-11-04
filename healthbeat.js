@@ -5,7 +5,7 @@ const QUEUE_NAME = 'healthbeats';
 const INTERVAL_IN_SECONDS = 15;
 
 let queueSvc;
-const healthbeatData = {}
+const info = {};
 
 async function getNodeIP() {
     const options = {
@@ -23,9 +23,8 @@ async function getNodeIP() {
     return result.interface[0].ipv4.ipAddress[0].publicIpAddress;
 }
 
-async function emitHealthbeat(body) {
-  healthbeatData.body = body;
-  const msgAsString = JSON.stringify(healthbeatData);
+async function emitHealthbeat(beat) {
+  const msgAsString = JSON.stringify({beat});
   console.debug(`Healthbeat message: ${msgAsString}.`);
   return new Promise(function(resolve, reject) {
     queueSvc.createMessage(QUEUE_NAME, msgAsString, function(err, result, response) {
@@ -45,11 +44,11 @@ async function main() {
     return;
   }
   queueSvc = azure.createQueueService();
-  setInterval(() => emitHealthbeat({ip}), INTERVAL_IN_SECONDS * 1000);
+  setInterval(() => emitHealthbeat({ip, info}), INTERVAL_IN_SECONDS * 1000);
 }
 
 main();
 
-module.exports.healthbeatData = healthbeatData;
+module.exports.info = info;
 
 //https://docs.microsoft.com/en-us/azure/storage/queues/storage-nodejs-how-to-use-queues
