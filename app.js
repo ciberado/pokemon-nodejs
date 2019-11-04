@@ -1,15 +1,13 @@
-
-
-
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const exphbs  = require('express-handlebars');
 
-const routes = require('./routes/index');
+const pokemonDB = require('./pokemon');
+const pokemon = pokemonDB.getRandomPokemon();
+console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
 
 const app = express();
 
@@ -35,7 +33,27 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+
+let healthy = true;
+const router = express.Router();
+
+/* GET home page. */
+router.get('/', (req, res) => {
+    res.render('index', { title: 'Express' , pokemon });
+  });
+  router.get('/health', (req, res) => {
+    if (healthy === false) {
+      res.status(500).send('I really don\' feel well.');
+    } else {
+      res.send('Looks everything is ok.');
+    }
+  });
+  router.delete('/poison', (req, res) => {
+    healthy = false;
+    res.send('Done');
+  });
+  
+app.use('/', router);
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -69,5 +87,8 @@ app.use((err, req, res, next) => {
         title: 'error'
     });
 });
+
+
+
 
 module.exports = app;
