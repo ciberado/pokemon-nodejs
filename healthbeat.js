@@ -4,16 +4,8 @@ const rp = require('request-promise-native');
 const QUEUE_NAME = 'healthbeats';
 const INTERVAL_IN_SECONDS = 15;
 
+let queueSvc;
 const healthbeatData = {}
-
-if (!process.env.AZURE_STORAGE_CONNECTION_STRING) {
-    console.warn(`AZURE_STORAGE_CONNECTION_STRING variable not found.`+ 
-                 `Proceeding without healthbeat.`);
-    return;
-}
-
-
-const queueSvc = azure.createQueueService();
 
 async function getNodeIP() {
     const options = {
@@ -47,6 +39,12 @@ async function emitHealthbeat(body) {
 async function main() {
   const ip = await getNodeIP();
   console.log(`Computer IP: ${ip}.`);
+  if (!process.env.AZURE_STORAGE_CONNECTION_STRING) {
+    console.warn(`AZURE_STORAGE_CONNECTION_STRING variable not found.`+ 
+                 `Proceeding without healthbeat.`);
+    return;
+  }
+  queueSvc = azure.createQueueService();
   setInterval(() => emitHealthbeat({ip}), INTERVAL_IN_SECONDS * 1000);
 }
 

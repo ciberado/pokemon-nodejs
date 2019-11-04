@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const exphbs  = require('express-handlebars');
 
+const healthbeat = require('./healthbeat.js');
+
 const pokemonDB = require('./pokemon');
 const pokemon = pokemonDB.getRandomPokemon();
 console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
@@ -88,7 +90,10 @@ app.use((err, req, res, next) => {
     });
 });
 
+app.set('port', process.env.PORT || 80);
 
-
+var server = app.listen(app.get('port'), function() {
+  console.log('Express server listening on port ' + server.address().port);
+});
 
 module.exports = app;
