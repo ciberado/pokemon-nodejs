@@ -44,7 +44,7 @@ async function main() {
     return;
   }
   queueSvc = azure.createQueueService();
-  setInterval(() => emitHealthbeat({ip, info}), INTERVAL_IN_SECONDS * 1000);
+  setInterval(() => emitHealthbeat({ip, info, timestamp : Date.now()}), INTERVAL_IN_SECONDS * 1000);
 }
 
 main();
