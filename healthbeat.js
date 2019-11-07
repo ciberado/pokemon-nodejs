@@ -2,7 +2,7 @@ const azure = require('azure-storage');
 const rp = require('request-promise-native');
 
 const QUEUE_NAME = 'healthbeats';
-const INTERVAL_IN_SECONDS = 15;
+const INTERVAL_IN_SECONDS = 5;
 
 let queueSvc;
 const info = {};
