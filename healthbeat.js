@@ -1,10 +1,11 @@
-const azure = require('azure-storage');
+const { DefaultAzureCredential } = require("@azure/identity");
+const { QueueServiceClient } = require("@azure/storage-queue");
 const rp = require('request-promise-native');
 
 const QUEUE_NAME = 'healthbeats';
 const INTERVAL_IN_SECONDS = 5;
 
-let queueSvc;
+let queueClient;
 const info = {};
 
 async function getNodeIP() {
@@ -26,29 +27,41 @@ async function getNodeIP() {
 async function emitHealthbeat(beat) {
   const msgAsString = JSON.stringify({beat});
   console.debug(`Healthbeat message: ${msgAsString}.`);
-  return new Promise(function(resolve, reject) {
-    queueSvc.createMessage(QUEUE_NAME, msgAsString, function(err, result, response) {
-      if (err) reject(err)
-      else resolve({result, response});
-    })
-  });
+  return queueClient.sendMessage(msgAsString);
 }
 
 
 async function main() {
   const ip = await getNodeIP();
   console.log(`Computer IP: ${ip}.`);
-  if (!process.env.AZURE_STORAGE_CONNECTION_STRING) {
-    console.warn(`AZURE_STORAGE_CONNECTION_STRING variable not found.`+ 
+  if (!process.env.AZURE_STORAGE_NAME) {
+    console.warn(`AZURE_STORAGE_NAME variable not found.`+ 
                  `Proceeding without healthbeat.`);
     return;
   }
-  queueSvc = azure.createQueueService();
-  setInterval(() => emitHealthbeat({ip, info, timestamp : Date.now()}), INTERVAL_IN_SECONDS * 1000);
+ 
+  const defaultAzureCredential = new DefaultAzureCredential();
+  const queueServiceClient = new QueueServiceClient(
+    `https://${process.env.AZURE_STORAGE_NAME}.queue.core.windows.net`,
+    // Example: `https://lab1018storageaccount.queue.core.windows.net`,
+    defaultAzureCredential, {
+      retryOptions: { 
+        maxTries: 4 
+      }
+    }
+  );
+  
+  queueClient = queueServiceClient.getQueueClient(QUEUE_NAME);
+    
+  setInterval(async () => {
+    try {
+      await emitHealthbeat({ip, info, timestamp : Date.now()});
+    } catch (err) {
+      console.warn(`ERR: healthbet error (${err}).`);
+    }
+  }, INTERVAL_IN_SECONDS * 1000);
 }
 
 main();
 
 module.exports.info = info;
-
-//https://docs.microsoft.com/en-us/azure/storage/queues/storage-nodejs-how-to-use-queues
