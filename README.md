@@ -22,3 +22,5 @@ export PORT=8080
 export AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=<...>core.windows.net"
 node app.js
 ```
+
+See [SDK documentation](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-storage-queue/12.0.0/index.html) for further information.
