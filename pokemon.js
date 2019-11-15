@@ -22,6 +22,7 @@ async function getRandomPokemon() {
       password: connAttr.get('pwd'),
       server: connAttr.get('server').match('.*:(.*),')[1], 
       database: connAttr.get('database'),
+      connectionTimeout : 1000*60*2,
       encrypt : true
     };
     
