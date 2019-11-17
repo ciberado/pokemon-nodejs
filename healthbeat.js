@@ -1,6 +1,7 @@
 const { DefaultAzureCredential } = require("@azure/identity");
 const { QueueServiceClient } = require("@azure/storage-queue");
 const rp = require('request-promise-native');
+const delay = require('delay');
 
 const QUEUE_NAME = 'healthbeats';
 const INTERVAL_IN_SECONDS = 5;
@@ -33,7 +34,7 @@ async function emitHealthbeat(beat) {
 
 async function main() {
   const ip = await getNodeIP();
-  console.log(`Computer IP: ${ip}.`);
+  console.log(`Starting healthbeat. Computer IP: ${ip}.`);
   if (!process.env.AZURE_STORAGE_NAME) {
     console.warn(`AZURE_STORAGE_NAME variable not found.`+ 
                  `Proceeding without healthbeat.`);
@@ -51,7 +52,15 @@ async function main() {
     }
   );
   
-  queueClient = queueServiceClient.getQueueClient(QUEUE_NAME);
+
+  do {
+    try {
+      queueClient = queueServiceClient.getQueueClient(QUEUE_NAME);  
+    } catch(err) {
+      console.error(`Error accessing queue ${QUEUE_NAME}: ${err}. Retrying in 60 seconds.`);
+      await delay(60*1000);
+    }
+  } while (!queueClient);
     
   setInterval(async () => {
     try {
