@@ -56,7 +56,7 @@ async function getRandomPokemon() {
   let pokemon;
   do {
     try {
-      pokemon = await queryDatabaseForRandomPokemon();
+      pokemon = await queryDatabaseForRandomPokemon(config);
     } catch (err) {
       console.error(`Error accessing DB ${config.database}: ${err}. Retrying in 60 seconds.`);
       await delay(60*1000);
