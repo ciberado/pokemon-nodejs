@@ -22,7 +22,7 @@ async function getConnectionConfig() {
     password: connAttr.get('pwd'),
     server: connAttr.get('server').match('.*:(.*),')[1], 
     database: connAttr.get('database'),
-    connectionTimeout : 1000*60*2,
+    connectionTimeout : 1000*30,
     encrypt : true
   };  
 
@@ -59,7 +59,7 @@ async function getRandomPokemon() {
       pokemon = await queryDatabaseForRandomPokemon(config);
     } catch (err) {
       console.error(`Error accessing DB ${config.database}: ${err}. Retrying in 60 seconds.`);
-      await delay(60*1000);
+      await delay(30*1000);
     }  
   } while (!pokemon);
   return pokemon;
