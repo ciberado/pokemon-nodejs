@@ -22,7 +22,7 @@
     "morgan": "^1.6.1",
     "mssql": "^6.0.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
+    "request-promise-native": "^1.0.8",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
