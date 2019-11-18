@@ -9,6 +9,7 @@ const healthbeat = require('./healthbeat.js');
 const pokemonDB = require('./pokemon'); 
 
 (async ()=> {
+  await healthbeat.start();
   const pokemon = await pokemonDB.getRandomPokemon();
   console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
   healthbeat.info.pokemon = pokemon;

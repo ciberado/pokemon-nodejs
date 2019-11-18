@@ -80,6 +80,5 @@ async function main() {
   }, INTERVAL_IN_SECONDS * 1000);
 }
 
-main();
-
 module.exports.info = info;
+module.exports.start = main;
