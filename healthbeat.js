@@ -21,8 +21,15 @@ async function getNodeIP() {
       json : true
     };
 
-    const result = await rp(options);
-    return result.interface[0].ipv4.ipAddress[0].publicIpAddress;
+    let publicIp;
+    do {
+      const result = await rp(options);
+      publicIp = result.interface[0].ipv4.ipAddress[0].publicIpAddress;
+      if (!publicIp) {
+        console.log(`Still waiting for public ip. Retrying in 20 seconds.`);
+        await delay(20*1000);
+      }
+    } while(!publicIp);
 }
 
 async function emitHealthbeat(beat) {
