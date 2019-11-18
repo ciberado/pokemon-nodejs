@@ -11,7 +11,7 @@ const info = {};
 
 async function getNodeIPIfconfigCo() {
   const options = {
-    uri: 'http://ifconfig.co'
+    uri: 'http://ifconfig.co/ip'
   };
   const publicIp = await rp(options);
   return publicIp;
