@@ -41,6 +41,7 @@ async function getNodeIP() {
     publicIp = await getNodeIPMetadata();
     if (!publicIp) {
       publicIp = await getNodeIPIfconfigCo();
+      if (publicIp) publicIp = publicIp.trim();
     }
     if (!publicIp) {
       console.log(`Still waiting for public ip. Retrying in 20 seconds.`);
