@@ -62,6 +62,7 @@ async function getRandomPokemon() {
       await delay(60*1000);
     }  
   } while (!pokemon);
+  return pokemon;
 }
 
 
