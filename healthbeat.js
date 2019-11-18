@@ -10,6 +10,7 @@ let queueClient;
 const info = {};
 
 async function getNodeIP() {
+    // https://docs.microsoft.com/es-es/azure/virtual-machines/windows/instance-metadata-service
     const options = {
       uri: 'http://169.254.169.254/metadata/instance/network',
       qs : {
@@ -30,6 +31,7 @@ async function getNodeIP() {
         await delay(20*1000);
       }
     } while(!publicIp);
+    return publicIp;
 }
 
 async function emitHealthbeat(beat) {
