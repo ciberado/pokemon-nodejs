@@ -105,7 +105,7 @@
             setTimeout(() => this.remove(), 1000*2.5);
         };
 
-        xmlhttp.open('DELETE', '/poison', true);
+        xmlhttp.open('DELETE', window.location.pathname + '/poison', true);
         xmlhttp.send();        
     }, false);
 

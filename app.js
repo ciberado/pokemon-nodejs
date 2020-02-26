@@ -17,6 +17,16 @@ const env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
+let baseUrl = process.env.BASE_URL || '/';
+if (baseUrl.endsWith('/') === false) {
+   baseUrl = baseUrl + '/';
+}
+if (baseUrl.startsWith('/') === false) {
+   baseUrl = '/' + baseUrl;
+}
+
+console.log(`Using ${baseUrl} as url base.`);
+
 // view engine setup
 
 app.engine('handlebars', exphbs({
@@ -35,7 +45,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use(baseUrl, routes);
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {
