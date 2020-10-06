@@ -22,4 +22,7 @@ router.delete('/poison', (req, res) => {
   healthy = false;
   res.send('Done');
 });
+router.get('/exit', (req, res) => {
+  process.exit(-1);
+});
 module.exports = router;
