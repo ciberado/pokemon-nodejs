@@ -11,7 +11,7 @@ const pokemonDB = require('./pokemon');
 const pokemon = pokemonDB.getRandomPokemon();
 console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
 
-const services = process.env?.SERVICES.split(',') || [];
+const services = process.env.SERVICES?.split(',') || [];
 console.log(`Services: ${JSON.stringify(services)}.`);
 
 process.on('SIGTERM', (evt)=>{
