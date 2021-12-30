@@ -20,10 +20,6 @@ let healthy = true;
 
 const app = express();
 
-const env = process.env.NODE_ENV || 'development';
-app.locals.ENV = env;
-app.locals.ENV_DEVELOPMENT = env == 'development';
-
 let baseUrl = process.env.BASE_URL || '/';
 if (baseUrl.endsWith('/') === false) {
    baseUrl = baseUrl + '/';
