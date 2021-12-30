@@ -11,6 +11,9 @@ const pokemonDB = require('./pokemon');
 const pokemon = pokemonDB.getRandomPokemon();
 console.log(`Selected pokemon: %s.`, JSON.stringify(pokemon));
 
+const services = process.env?.SERVICES.split(',') || [];
+console.log(`Services: ${JSON.stringify(services)}.`);
+
 process.on('SIGTERM', (evt)=>{
   console.log(`Finishing process (${pokemon.name}).`);
   process.exit(0);
@@ -31,6 +34,7 @@ console.log(`Hostname: ${process.env.HOSTNAME}.`)
 console.log(`Using ${baseUrl} as url base.`);
 
 app.get('/', async (req, res) => {
+  
   res.render('index', { 
     title: 'Pokemon' , 
     pokemon,
