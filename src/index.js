@@ -1,5 +1,8 @@
 const os =  require('os');
 const process = require('process');
+
+const fetch = require('node-fetch');
+
 const express = require('express');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
@@ -35,6 +38,14 @@ console.log(`Using ${baseUrl} as url base.`);
 
 app.get('/', async (req, res) => {
   
+  await Promise.all(services.map(async s=>{
+    console.log(`Invoking service ${s}`);
+    const fetchResponse = await fetch(s);
+    const fetchResponseJSON = await(fetchResponse.json());
+    console.log(`Service ${s} completed.`);
+  }));
+
+  console.log(`Rendering webpage.`);
   res.render('index', { 
     title: 'Pokemon' , 
     pokemon,
