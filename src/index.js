@@ -30,7 +30,7 @@ if (baseUrl.startsWith('/') === false) {
 console.log(`Hostname: ${process.env.HOSTNAME}.`)
 console.log(`Using ${baseUrl} as url base.`);
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   res.render('index', { 
     title: 'Pokemon' , 
     pokemon,
