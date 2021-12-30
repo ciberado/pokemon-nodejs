@@ -35,7 +35,9 @@ app.get('/', (req, res) => {
     title: 'Pokemon' , 
     pokemon,
     hostname : os.hostname() 
-  });
+  }), (err, html) => {
+    res.end();
+  };
 });
 
 app.get('/health', (req, res) => {
