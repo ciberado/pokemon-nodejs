@@ -37,22 +37,40 @@ console.log(`Hostname: ${process.env.HOSTNAME}.`)
 console.log(`Using ${baseUrl} as url base.`);
 
 app.get('/', async (req, res) => {
+  const friends = [];
   
   await Promise.all(services.map(async s=>{
     console.log(`Invoking service ${s}`);
-    const fetchResponse = await fetch(s);
+    const fetchResponse = await fetch(s, { 
+      headers : {
+        'Accept' : 'application/json'
+      }
+    });
     const fetchResponseJSON = await(fetchResponse.json());
-    console.log(`Service ${s} completed.`);
+    friends.push(fetchResponseJSON);
+    console.log(`Service ${s} completed (${fetchResponseJSON.pokemon.name}).`);
   }));
 
-  console.log(`Rendering webpage.`);
-  res.render('index', { 
-    title: 'Pokemon' , 
+  const resPayload = {
     pokemon,
-    hostname : os.hostname() 
-  }), (err, html) => {
-    res.end();
+    hostname : os.hostname(),
+    friends : friends
   };
+
+  if (req.get('Accept') === 'application/json') {
+    console.log(`Rendering json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(resPayload));
+  } else {
+    console.log(`Rendering webpage.`);
+    res.render('index', { 
+      title: 'Pokemon' , 
+      payload : resPayload
+    }), (err, html) => {
+      res.end();
+    };  
+  }
+
 });
 
 app.get('/health', (req, res) => {
