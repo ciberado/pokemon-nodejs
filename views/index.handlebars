@@ -43,12 +43,41 @@
         color : tomato;
     }
 
+    .friends {
+        list-style-type: none;
+        display: grid;
+        grid-auto-flow: column;
+    }
+
+    .friends li {
+        color : gray;
+        text-align: center;        
+    }
+
+    .friends li img {
+        width: 100%;
+        height: 80px;
+        object-fit: contain;
+    }
+
 </style>
 <img id="pokemonlogo" src="img/pokemon-logo.svg" alt="pokemon logo"/>
 <div class="card">
-    <img src="img/pokemon/{{pokemon.id}}.png" alt="{{pokemon.name}} ({{pokemon.id}})"/> 
-    <h2>{{pokemon.name}}</h2>
+    <img src="img/pokemon/{{payload.pokemon.id}}.png" 
+         alt="{{payload.pokemon.name}} ({{payload.pokemon.id}})"/> 
+    <h2>{{payload.pokemon.name}}</h2>
     {{process.env.HOSTNAME}}
+
+    {{#if payload.friends}}
+    <ul class="friends">
+    {{#each payload.friends}}
+        <li><img src="img/pokemon/{{this.pokemon.id}}.png" 
+                alt="{{this.pokemon.name}} ({{this.pokemon.id}})"/>
+            {{this.pokemon.name}} at {{this.hostname}}            
+        </li>
+    {{/each}}
+    </ul>
+    {{/if}}
 </div> 
-<div id="version">1.0.0</div>
+<div id="version">1.0.1</div>
 
