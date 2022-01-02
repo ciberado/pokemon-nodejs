@@ -4,4 +4,5 @@
 
 * Added proper changelog
 * Removed unnecessary CSS
-
+* Now correctly managing `Accept: application/json` header
+* Showing the list of friends (from other servers)
