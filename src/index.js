@@ -75,7 +75,7 @@ app.get('/', async (req, res) => {
 
 app.get('/health', (req, res) => {
   if (healthy === false) {
-    res.status(500).send('I really don\' feel well.');
+    res.status(500).send('I really don\'t feel well.');
   } else {
     res.send('Looks everything is ok.');
   }
