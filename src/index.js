@@ -83,6 +83,9 @@ app.get('/health', (req, res) => {
 
 app.delete('/', (req, res) => {
   healthy = false;
+  if (req.query.now !== undefined) {
+    process.exit(-1);
+  }
   res.send('Done');
 });
 
